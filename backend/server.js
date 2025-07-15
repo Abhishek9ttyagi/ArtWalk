@@ -1,9 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const tours = require('./database');
 
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 5000;
 
 // Use CORS to allow our frontend to make requests to this backend
 app.use(cors());
@@ -13,6 +14,6 @@ app.get('/api/tours', (req, res) => {
     res.json(tours);
 });
 
-app.listen(port, () => {
-    console.log(`ArtWalk backend running on http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`ArtWalk backend running on http://localhost:${PORT}`);
 });
