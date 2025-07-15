@@ -24,6 +24,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         const response = await fetch('/api/tours'); // Use relative path only
         const tours = await response.json();
         renderTours(tours);
+        await fetchTours(); // Fetch tours before displaying
+        displayTours();
+        startWatchingLocation(); // Start watching location after tours are loaded
     } catch (error) {
         document.getElementById('tours-list').innerHTML = '<p>Could not load tours.</p>';
     }
