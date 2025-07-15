@@ -250,10 +250,6 @@ function checkProximityToArtworks() {
                 showDetailModal();
             }
         }
-    } else {
-        if (state.currentArtwork) {
-            clearTriggeredArtwork();
-        }
     }
 }
 
