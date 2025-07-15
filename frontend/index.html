@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArtWalk</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Add inside <head> -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Add before </body> -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app-container">
+
+        <!-- ===== WELCOME SCREEN ===== -->
+        <div id="welcome-screen" class="view active">
+            <div class="welcome-header">
+                <h1>ArtWalk</h1>
+                <p>Discover the art hidden in your streets.</p>
+            </div>
+            <div id="tours-list">
+                <!-- Tour cards will be injected here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- ===== LIVE TOUR SCREEN ===== -->
+        <div id="tour-screen" class="view">
+            <div class="map-container">
+                <div id="user-dot"></div>
+                <!-- Artwork pins will be injected here -->
+            </div>
+            <div id="art-tray" class="tray-collapsed">
+                <div class="tray-handle" onclick="toggleTray()">
+                    <span id="tray-arrow">ᐱ</span>
+                </div>
+                <div id="tray-content">
+                    <!-- Triggered art card appears here -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Move detail-modal here, outside #app-container -->
+    <div id="detail-modal" class="modal-hidden">
+        <div class="modal-content">
+            <button class="close-button" onclick="closeDetailModal()">×</button>
+            <img id="detail-img" src="" alt="Artwork Image">
+            <h2 id="detail-title"></h2>
+            <h3 id="detail-artist"></h3>
+            <p id="detail-story"></p>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
