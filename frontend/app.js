@@ -19,33 +19,16 @@ const trayContent = document.getElementById('tray-content');
 const detailModal = document.getElementById('detail-modal');
 
 // --- Initialization ---
-document.addEventListener('DOMContentLoaded', initialize);
-
-async function initialize() {
-    await fetchTours();
-    displayTours();
-    // Ask for permission and start tracking location right away
-    startWatchingLocation();
-}
-
-// --- View Management ---
-function showView(viewName) {
-    Object.values(views).forEach(view => view.classList.remove('active'));
-    views[viewName].classList.add('active');
-}
-
-// --- Data Fetching ---
-async function fetchTours() {
+document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch('http://localhost:3000/api/tours');
-        state.tours = await response.json();
+        const response = await fetch('/api/tours'); // Use relative path only
+        const tours = await response.json();
+        renderTours(tours);
     } catch (error) {
-        console.error("Failed to fetch tours:", error);
-        toursList.innerHTML = "<p>Could not load tours. Is the backend server running?</p>";
+        document.getElementById('tours-list').innerHTML = '<p>Could not load tours.</p>';
     }
-}
+});
 
-// --- Welcome Screen Logic ---
 function renderTours(tours) {
     const toursList = document.getElementById('tours-list');
     toursList.innerHTML = '';
@@ -61,6 +44,26 @@ function renderTours(tours) {
     });
 }
 
+// --- View Management ---
+function showView(viewName) {
+    Object.values(views).forEach(view => view.classList.remove('active'));
+    views[viewName].classList.add('active');
+}
+
+// --- Data Fetching ---
+async function fetchTours() {
+    try {
+        // Use relative path for Vercel serverless function
+        const response = await fetch('/api/tours');
+        if (!response.ok) throw new Error('Network response was not ok');
+        state.tours = await response.json();
+    } catch (error) {
+        console.error("Failed to fetch tours:", error);
+        toursList.innerHTML = "<p>Could not load tours. Is the backend serverless function deployed?</p>";
+    }
+}
+
+// --- Welcome Screen Logic ---
 function displayTours() {
     toursList.innerHTML = '';
     state.tours.forEach(tour => {
@@ -357,10 +360,6 @@ function checkProximityAndTrigger() {
 }
 
 // On page load, fetch tours and render
-fetch('http://localhost:3000/api/tours')
-    .then(res => res.json())
-    .then(data => renderTours(data));
-
 function normalizeLat(lat) {
     if (!state.currentTour || !state.currentTour.artworks.length) return 50;
     const lats = state.currentTour.artworks.map(a => a.lat);
