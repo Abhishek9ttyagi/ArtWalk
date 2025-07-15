@@ -99,6 +99,9 @@ function startTour(tourId) {
     showView('tour');
 }
 
+// Expose startTour to global scope for inline onclick
+window.startTour = startTour;
+
 function setupMap() {
     // Use Leaflet.js instead of Google Maps
     const mapContainer = document.querySelector('.map-container');
