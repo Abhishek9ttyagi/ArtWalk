@@ -88,8 +88,12 @@ function displayTours() {
 
 // --- Tour Logic ---
 function startTour(tourId) {
+    console.log('Start Tour clicked:', tourId); // Debug log
     state.currentTour = state.tours.find(t => t.id === tourId);
-    if (!state.currentTour) return;
+    if (!state.currentTour) {
+        console.warn('Tour not found:', tourId);
+        return;
+    }
 
     // Hide welcome, show tour screen
     document.getElementById('welcome-screen').classList.remove('active');
@@ -99,7 +103,7 @@ function startTour(tourId) {
     showView('tour');
 }
 
-// Expose startTour to global scope for inline onclick
+// Assign to window immediately after definition
 window.startTour = startTour;
 
 function setupMap() {
